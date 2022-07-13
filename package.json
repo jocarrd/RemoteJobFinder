@@ -8,7 +8,9 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@chakra-ui/vue": "^0.6.2",
     "core-js": "^3.8.3",
+    "emotion": "^10.0.27",
     "vue": "^2.6.14"
   },
   "devDependencies": {
@@ -18,7 +20,17 @@
     "@vue/test-utils": "^1.1.3",
     "@vue/vue2-jest": "^27.0.0-alpha.2",
     "babel-jest": "^27.0.6",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-vue": "^9.2.0",
     "jest": "^27.0.5",
+    "prettier": "^2.7.1",
+    "vue-cli-plugin-chakra-ui": "~1.0.3",
     "vue-template-compiler": "^2.6.14"
   }
 }
