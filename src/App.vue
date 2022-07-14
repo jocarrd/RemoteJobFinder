@@ -46,7 +46,7 @@
               shadow="md"
               border-width="1px"
             >
-              <c-flex>
+              <c-flex class="flexJobContainer">
                 <c-box mr="8"
                   ><img v-if="item.logo" :src="item.logo" />
                   <img
@@ -54,7 +54,12 @@
                     src="https://pbs.twimg.com/profile_images/1410519199651348484/5wIFnWBg_200x200.jpg"
                 /></c-box>
                 <c-box>
-                  <c-heading fontSize="2xl">{{ item?.role }}</c-heading>
+                  <c-link :href="item.url" is-external>
+                    <c-heading fontSize="2xl"
+                      >{{ item?.role }} <c-icon name="info" mx="2px"
+                    /></c-heading>
+                  </c-link>
+
                   <c-heading mt="4" fontSize="xl">{{
                     item?.company_name
                   }}</c-heading>
@@ -77,6 +82,14 @@
                     variantColor="vue"
                   >
                     {{ "Remote" }}
+                  </c-tag>
+                  <c-tag
+                    ml="2"
+                    variant-color="red"
+                    v-if="item.employment_type"
+                    :key="item.employement_type"
+                  >
+                    {{ item.employment_type }}
                   </c-tag>
                 </c-box>
               </c-flex>
@@ -102,6 +115,8 @@ import {
   CTagLabel,
   CInput,
   CSelect,
+  CLink,
+  CIcon,
 } from "@chakra-ui/vue";
 
 import APIServices from "./services/APIServices";
@@ -120,6 +135,8 @@ export default {
     CTagLabel,
     CInput,
     CSelect,
+    CLink,
+    CIcon,
   },
   methods: {
     submit() {
@@ -150,5 +167,18 @@ img {
 
 .jobContainer:hover {
   background-color: lightcyan;
+}
+
+@media screen and (max-width: 480px) {
+  .flexJobContainer {
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
+  .flexJobContainer :first-child {
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+  }
 }
 </style>
