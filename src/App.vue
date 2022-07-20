@@ -43,6 +43,13 @@
       }}</c-text>
 
       <ListJobs :jobs="jobs"></ListJobs>
+      <c-flex align="center" justify="center" mt="8">
+        <PaginationComponent
+          :submit="submit"
+          :location="location"
+          :tech="tech"
+        ></PaginationComponent>
+      </c-flex>
     </c-box>
   </c-box>
 </template>
@@ -61,6 +68,7 @@ import {
 
 import APIServices from "./services/APIServices";
 import ListJobs from "./components/ListJobs/ListJobs.vue";
+import PaginationComponent from "./components/Pagination/PaginationComponent.vue";
 export default {
   name: "App",
   components: {
@@ -73,11 +81,12 @@ export default {
     CInput,
     CSelect,
     ListJobs,
+    PaginationComponent,
   },
   methods: {
-    submit() {
+    submit(page = 1) {
       this.loading = true;
-      APIServices.finder(this.location, 1, this.tech).then((response) => {
+      APIServices.finder(this.location, page, this.tech).then((response) => {
         this.jobs = response.results;
         this.loading = false;
       });
@@ -89,6 +98,7 @@ export default {
       location: "London",
       loading: false,
       tech: "",
+      customStyles,
     };
   },
 
@@ -96,6 +106,16 @@ export default {
     APIServices.finder(this.location).then((response) => {
       this.jobs = response.results;
     });
+  },
+};
+
+const customStyles = {
+  li: {
+    display: "inline-block",
+    border: "2px dotted green",
+  },
+  a: {
+    color: "blue",
   },
 };
 </script>
