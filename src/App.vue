@@ -1,6 +1,6 @@
 <template>
   <c-box mt="1vh" d="flex" p="8" w="100vw" h="100vh" flex-dir="column">
-    <c-flex align="center" justify="left" ml="12vw" mt="8">
+    <c-flex align="center" ml="12vw" mt="8">
       <c-icon-button
         aria-label="change color"
         @click="$toggleColorMode"
@@ -92,11 +92,6 @@ export default {
   name: "App",
   inject: ["$chakraColorMode", "$toggleColorMode"],
   computed: {
-    /**
-     * In order to preserve reactivity, Chakra provides the color mode
-     * inside the `$chakraColorMode` function. This function returns the current
-     * color mode.
-     */
     colorMode() {
       return this.$chakraColorMode();
     },

@@ -1,12 +1,12 @@
 <template>
   <div class="pagination">
     <a>&laquo;</a>
-    <a v-on:click="submit(1)">1</a>
-    <a v-on:click="submit(2)">2</a>
-    <a v-on:click="submit(3)">3</a>
-    <a v-on:click="submit(4)">4</a>
-    <a v-on:click="submit(5)">5</a>
-    <a v-on:click="submit(6)">6</a>
+    <a v-on:click="paginate(1)">1</a>
+    <a v-on:click="paginate(2)">2</a>
+    <a v-on:click="paginate(3)">3</a>
+    <a v-on:click="paginate(4)">4</a>
+    <a v-on:click="paginate(5)">5</a>
+    <a v-on:click="paginate(6)">6</a>
   </div>
 </template>
 <script>
