@@ -15,7 +15,7 @@ export default {
   props: {
     location: String,
     tech: String,
-    submit: Function,
+    paginate: Function,
   },
 };
 </script>
