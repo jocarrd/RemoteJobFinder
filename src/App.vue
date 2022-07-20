@@ -45,7 +45,7 @@
       <ListJobs :jobs="jobs"></ListJobs>
       <c-flex align="center" justify="center" mt="8">
         <PaginationComponent
-          :submit="submit"
+          :paginate="submit"
           :location="location"
           :tech="tech"
         ></PaginationComponent>
@@ -84,12 +84,14 @@ export default {
     PaginationComponent,
   },
   methods: {
-    submit(page = 1) {
+    submit(page) {
       this.loading = true;
-      APIServices.finder(this.location, page, this.tech).then((response) => {
-        this.jobs = response.results;
-        this.loading = false;
-      });
+      APIServices.finder(this.location, page | 1, this.tech).then(
+        (response) => {
+          this.jobs = response.results;
+          this.loading = false;
+        }
+      );
     },
   },
   data() {
@@ -100,12 +102,6 @@ export default {
       tech: "",
       customStyles,
     };
-  },
-
-  created() {
-    APIServices.finder(this.location).then((response) => {
-      this.jobs = response.results;
-    });
   },
 };
 
