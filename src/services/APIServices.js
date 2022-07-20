@@ -2,13 +2,16 @@ import API from "./config";
 import ApiEP from "./ApiEP";
 
 const APIServices = {
-  finder: (location, page = "1") =>
+  finder: (location, page = 1, tech = "") =>
     new Promise((resolve, reject) => {
-      API.get(ApiEP.FIND_JOBS + `?location=${location}&page=${page}`, {
-        headers: {
-          Authorization: `token ${process.env.VUE_APP_FIND_WORK_TOKEN}`,
-        },
-      })
+      API.get(
+        ApiEP.FIND_JOBS + `?location=${location}&search=${tech}&page=${page}`,
+        {
+          headers: {
+            Authorization: `token ${process.env.VUE_APP_FIND_WORK_TOKEN}`,
+          },
+        }
+      )
         .then((response) => {
           resolve(response.data);
           console.log(response.data);

@@ -16,11 +16,16 @@
       <c-flex
         ><c-form-control>
           <c-select
+            placeholder="Select option"
             width="10vw"
             id="country"
-            placeholder="Role"
-          /> </c-form-control
-      ></c-flex>
+            v-model="tech"
+            ><option>React</option>
+            <option>Vue</option>
+            <option>Angular</option></c-select
+          >
+        </c-form-control></c-flex
+      >
       <c-flex ml="8px"
         ><c-button
           @click="submit"
@@ -34,69 +39,10 @@
     </c-flex>
     <c-box mt="4vh" d="flex" w="auto" h="100vh" flex-dir="column">
       <c-text fontSize="xl" align="center">{{
-        "Found " + jobs.length + " matching jobs"
+        `Found  ${jobs.length} matching jobs`
       }}</c-text>
-      <ul id="example-1">
-        <div v-for="item in jobs" v-bind:key="item.id">
-          <c-stack mt="8" mx="12vw" :spacing="5">
-            <c-box
-              class="jobContainer"
-              rounded="lg"
-              :p="5"
-              shadow="md"
-              border-width="1px"
-            >
-              <c-flex class="flexJobContainer">
-                <c-box mr="8"
-                  ><img v-if="item.logo" :src="item.logo" />
-                  <img
-                    v-if="!item.logo"
-                    src="https://pbs.twimg.com/profile_images/1410519199651348484/5wIFnWBg_200x200.jpg"
-                /></c-box>
-                <c-box>
-                  <c-link :href="item.url" is-external>
-                    <c-heading fontSize="2xl"
-                      >{{ item?.role }} <c-icon name="info" mx="2px"
-                    /></c-heading>
-                  </c-link>
 
-                  <c-heading mt="4" fontSize="xl">{{
-                    item?.company_name
-                  }}</c-heading>
-
-                  <c-tag
-                    v-for="keyword in item.keywords"
-                    mt="4"
-                    variant-color="cyan"
-                    v-bind:key="keyword"
-                    mr="8px"
-                  >
-                    <c-tag-label>{{ keyword }}</c-tag-label>
-                    <c-tag-icon icon="check" size="12px" />
-                  </c-tag>
-
-                  <c-tag
-                    variant-color="red"
-                    v-if="item.remote"
-                    :key="item.remote"
-                    variantColor="vue"
-                  >
-                    {{ "Remote" }}
-                  </c-tag>
-                  <c-tag
-                    ml="2"
-                    variant-color="red"
-                    v-if="item.employment_type"
-                    :key="item.employement_type"
-                  >
-                    {{ item.employment_type }}
-                  </c-tag>
-                </c-box>
-              </c-flex>
-            </c-box>
-          </c-stack>
-        </div>
-      </ul>
+      <ListJobs :jobs="jobs"></ListJobs>
     </c-box>
   </c-box>
 </template>
@@ -109,17 +55,12 @@ import {
   CButton,
   CFlex,
   CText,
-  CStack,
-  CTag,
-  CTagIcon,
-  CTagLabel,
   CInput,
   CSelect,
-  CLink,
-  CIcon,
 } from "@chakra-ui/vue";
 
 import APIServices from "./services/APIServices";
+import ListJobs from "./components/ListJobs/ListJobs.vue";
 export default {
   name: "App",
   components: {
@@ -129,56 +70,32 @@ export default {
     CFlex,
     CButton,
     CText,
-    CStack,
-    CTag,
-    CTagIcon,
-    CTagLabel,
     CInput,
     CSelect,
-    CLink,
-    CIcon,
+    ListJobs,
   },
   methods: {
     submit() {
       this.loading = true;
-      APIServices.finder(this.location).then((response) => {
+      APIServices.finder(this.location, 1, this.tech).then((response) => {
         this.jobs = response.results;
         this.loading = false;
       });
     },
   },
   data() {
-    return { jobs: {}, location: "London", loading: false };
+    return {
+      jobs: {},
+      location: "London",
+      loading: false,
+      tech: "",
+    };
   },
 
   created() {
-    APIServices.finder("London").then((response) => {
+    APIServices.finder(this.location).then((response) => {
       this.jobs = response.results;
     });
   },
 };
 </script>
-
-<style>
-img {
-  object-fit: contain;
-  height: 100%;
-}
-
-.jobContainer:hover {
-  background-color: lightcyan;
-}
-
-@media screen and (max-width: 480px) {
-  .flexJobContainer {
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-  }
-  .flexJobContainer :first-child {
-    width: 100%;
-    justify-content: center;
-    align-content: center;
-  }
-}
-</style>
